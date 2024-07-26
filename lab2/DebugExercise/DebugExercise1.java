@@ -1,14 +1,16 @@
 package DebugExercise;
 
+import java.util.function.LongToIntFunction;
+
 /**
  * Exercise for learning how the debug, breakpoint, and step-into
  * feature work.
  */
 public class DebugExercise1 {
-    public static int divideThenRound(int top, int bottom) {
-        int quotient = top / bottom;
-        int result = Math.round(quotient);
-        return result;
+    public static int divideThenRound(double top, double bottom) {
+
+        long result = Math.round(top/bottom);
+        return Math.toIntExact(result);
     }
 
     public static void main(String[] args) {

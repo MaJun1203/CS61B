@@ -113,6 +113,61 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        //向上
+        class NorthTilt{
+            boolean handleNorthTilt(){
+                boolean localChanged=false;
+                for (int j = 0; j < 4; j++) {
+                    int m=3;
+                    for (int i = 2; i >= 0; i--) {
+                        if (tile(j, i) == null) {
+                            continue;
+                        }else {
+                            for (int k = i + 1; k <= m; k++) {
+                                if (tile(j, k) == null) {
+                                    if (k < m) {
+                                        continue;
+                                    } else {
+                                        Tile t = board.tile(j, i);
+                                        board.move(j, k, t);
+                                        localChanged = true;
+                                    }
+                                } else if (tile(j, k).value() == tile(j, i).value()) {
+                                    Tile t = board.tile(j, i);
+                                    board.move(j, k, t);
+                                    score += tile(j, k).value();
+                                    m = k - 1;
+                                    localChanged = true;
+                                } else if (k - 1 == i) {
+                                    break;
+                                } else {
+                                    Tile t = board.tile(j, i);
+                                    board.move(j, k - 1, t);
+                                    localChanged = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                return localChanged;
+            }
+        }
+        NorthTilt hanler=new NorthTilt();
+        if(side==Side.NORTH) {
+            changed=hanler.handleNorthTilt();
+        }else if (side==Side.WEST){
+            board.setViewingPerspective(Side.WEST);
+            changed=hanler.handleNorthTilt();
+            board.setViewingPerspective(Side.NORTH);
+        }else if (side==Side.EAST) {
+            board.setViewingPerspective(Side.EAST);
+            changed = hanler.handleNorthTilt();
+            board.setViewingPerspective(Side.NORTH);
+        }else{
+            board.setViewingPerspective(Side.SOUTH);
+            changed=hanler.handleNorthTilt();
+            board.setViewingPerspective(Side.NORTH);
+        }
 
         checkGameOver();
         if (changed) {
@@ -138,6 +193,13 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        for(int i=0;i<b.size();i++) {
+           for(int j=0;j<b.size();j++) {
+                if(b.tile(i,j)==null) {
+                    return true;
+                }
+           }
+        }
         return false;
     }
 
@@ -148,6 +210,16 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        for(int i=0;i< b.size();i++){
+            for(int j=0;j<b.size();j++){
+                if(b.tile(i,j)==null){
+                    continue;
+                }
+                if(b.tile(i,j).value()==MAX_PIECE){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -159,6 +231,23 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        if(emptySpaceExists(b)){
+            return true;
+        }else{
+            for(int i=0;i<b.size()-1;i++){
+                for(int j=0;j<b.size()-1;j++){
+                    int CurrVau=b.tile(i,j).value();
+                    if(CurrVau==b.tile(i,j+1).value() || CurrVau==b.tile(i+1,j).value()){
+                        return true;
+                    }
+                }
+                int CurrLasColVau=b.tile(b.size()-1,i).value();
+                int CurrLasRowVau=b.tile(i,b.size()-1).value();
+                if(CurrLasColVau==b.tile(b.size()-1,i+1).value()||CurrLasRowVau==b.tile(i+1,b.size()-1).value()){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
