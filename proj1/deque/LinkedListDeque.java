@@ -60,6 +60,13 @@ public class LinkedListDeque<Xiaoma> implements Deque<Xiaoma>{
      *Determine whether the linked list is empty.
      * @return true of false.
      */
+    public boolean isEmpty(){
+        if(size == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
     /**

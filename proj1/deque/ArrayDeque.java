@@ -151,6 +151,13 @@ public class ArrayDeque<Xiaoma> implements Deque<Xiaoma>{
      *
      * @return Whether the list is empty.
      */
+    public boolean isEmpty(){
+        if(size == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
     public static void main(String[] args) {
