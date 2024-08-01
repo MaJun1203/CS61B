@@ -1,6 +1,6 @@
 package deque;
 
-public class LinkedListDeque<Xiaoma> {
+public class LinkedListDeque<Xiaoma> implements Deque<Xiaoma>{
     private IntNode sentinel;
     private int size = 0;
     private class IntNode<Xiaoma>{
@@ -60,13 +60,7 @@ public class LinkedListDeque<Xiaoma> {
      *Determine whether the linked list is empty.
      * @return true of false.
      */
-    public boolean isEmpty(){
-        if(sentinel.next == null){
-            return true;
-        }else{
-            return false;
-        }
-    }
+
 
     /**
      * Return the size of the list.

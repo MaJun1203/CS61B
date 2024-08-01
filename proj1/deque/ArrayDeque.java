@@ -1,6 +1,6 @@
 package deque;
 
-public class ArrayDeque<Xiaoma>{
+public class ArrayDeque<Xiaoma> implements Deque<Xiaoma>{
     private int size;
     private int nextFirst;
     private int nextLast;
@@ -16,6 +16,7 @@ public class ArrayDeque<Xiaoma>{
      *Add an element to the front of the linked list.
      * @param x The element to add.
      */
+    @Override
     public void addFirst(Xiaoma x){
         if(nextFirst == nextLast){
             resetSize(items.length * 2);
@@ -36,6 +37,7 @@ public class ArrayDeque<Xiaoma>{
      * Add an element to the last of the linked list.
      * @param x The element to add.
      */
+    @Override
     public void addLast(Xiaoma x){
         if(nextFirst == nextLast){
             resetSize(items.length * 2);
@@ -56,6 +58,7 @@ public class ArrayDeque<Xiaoma>{
      *Delete an element from the front of the linked list.
      * @return The delete element.
      */
+    @Override
     public Xiaoma removeFirst(){
         if((size - 1) * 4 < items.length && items.length > 8){
             resetSize(items.length/2);
@@ -83,6 +86,7 @@ public class ArrayDeque<Xiaoma>{
      * Delete an element from the last of the linked list.
      * @return The delete element.
      */
+    @Override
     public Xiaoma removeLast() {
         if((size - 1) * 4 < items.length && items.length > 8){
             resetSize(items.length/2);
@@ -111,8 +115,12 @@ public class ArrayDeque<Xiaoma>{
      * @param index The index of the element to get.
      * @return The element corresponding to the index in the linked list
      */
+    @Override
     public Xiaoma get(int index){
-        if(nextFirst + index + 1 > items.length){
+        if(size == 0){
+            return null;
+        }
+        if(nextFirst + index + 1 >= items.length){
             return items[nextFirst + index + 1 - items.length];
         }else{
             return items[nextFirst + index + 1];
@@ -121,7 +129,6 @@ public class ArrayDeque<Xiaoma>{
     public int size(){
         return size;
     }
-
     /**
      * Reset the list's size.
      * @param capacity The new size of the list.
@@ -144,35 +151,13 @@ public class ArrayDeque<Xiaoma>{
      *
      * @return Whether the list is empty.
      */
-    public boolean isEmpty(){
-        if(size == 0){
-            return true;
-        }else{
-            return false;
-        }
-    }
+
 
     public static void main(String[] args) {
         ArrayDeque<Integer> L = new ArrayDeque();
-        L.addLast(5);
-        L.addLast(10);
-        L.addLast(15);
-        L.addLast(20);
-        L.addLast(5);
-        L.addLast(5);
-        L.addLast(5);
-        L.addLast(5);
-        L.addLast(5);
-        L.removeLast();
-        L.removeLast();
-        L.removeLast();
-        L.removeLast();
-        L.removeLast();
-        L.removeLast();
-        L.removeLast();
-        L.removeLast();
-        L.removeLast();
-        System.out.println(L.get(1));
-        System.out.println(L.get(4));
+        for(int i=0;i<441;i++){
+            L.addLast(0);
+        }
+        System.out.println(L.get(0));
     }
 }
