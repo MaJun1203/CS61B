@@ -60,18 +60,22 @@ public class ArrayDeque<Xiaoma>{
         if((size - 1) * 4 < items.length && items.length > 8){
             resetSize(items.length/2);
         }
-        if(nextFirst + 1 == items.length){
-            Xiaoma num = items[0];
-            items[0] = null;
-            nextFirst = 0;
-            size -= 1;
-            return num;
+        if(size > 0){
+            if(nextFirst + 1 == items.length){
+                Xiaoma num = items[0];
+                items[0] = null;
+                nextFirst = 0;
+                size -= 1;
+                return num;
+            }else{
+                Xiaoma num = items[nextFirst + 1];
+                items[nextFirst + 1] = null;
+                nextFirst += 1;
+                size -= 1;
+                return num;
+            }
         }else{
-            Xiaoma num = items[nextFirst + 1];
-            items[nextFirst + 1] = null;
-            nextFirst += 1;
-            size -= 1;
-            return num;
+            return null;
         }
     }
 
@@ -83,20 +87,23 @@ public class ArrayDeque<Xiaoma>{
         if((size - 1) * 4 < items.length && items.length > 8){
             resetSize(items.length/2);
         }
-        if(nextLast == 0){
-            Xiaoma num =items[items.length-1];
-            items[items.length-1] = null;
-            nextLast = items.length-1;
-            size -= 1;
-            return num;
+        if(size > 0){
+            if(nextLast == 0){
+                Xiaoma num =items[items.length-1];
+                items[items.length-1] = null;
+                nextLast = items.length-1;
+                size -= 1;
+                return num;
+            }else{
+                Xiaoma num = items[nextLast - 1];
+                items[nextLast - 1] = null;
+                nextLast -= 1;
+                size -= 1;
+                return num;
+            }
         }else{
-            Xiaoma num = items[nextLast - 1];
-            items[nextLast - 1] = null;
-            nextLast -= 1;
-            size -= 1;
-            return num;
+            return null;
         }
-
     }
 
     /**

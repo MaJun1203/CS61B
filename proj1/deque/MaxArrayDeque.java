@@ -1,5 +1,6 @@
 package deque;
 
-public class MaxArrayDeque extends ArrayDeque{
+public class MaxArrayDeque<Xiaoma> extends ArrayDeque<Xiaoma>{
+
 
 }
