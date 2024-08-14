@@ -1,6 +1,8 @@
 package deque;
 
-public class LinkedListDeque<Xiaoma> implements Deque<Xiaoma>{
+import java.util.Iterator;
+
+public class LinkedListDeque<Xiaoma> implements Deque<Xiaoma>, Iterable<Xiaoma> {
     private IntNode sentinel;
     private int size = 0;
     private class IntNode<Xiaoma>{
@@ -175,13 +177,62 @@ public class LinkedListDeque<Xiaoma> implements Deque<Xiaoma>{
         }
     }
 
+    @Override
+    public Iterator<Xiaoma> iterator(){
+       return new ArraySetIterator();
+    }
+    public class ArraySetIterator implements Iterator<Xiaoma>{
+        private int wizPos;
+        public ArraySetIterator(){
+            wizPos = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return get(wizPos) != null;
+        }
+
+        @Override
+        public Xiaoma next() {
+            Xiaoma returnItem = get(wizPos);
+            wizPos += 1;
+            return returnItem;
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Deque<Xiaoma> o =(Deque<Xiaoma>) obj;
+        if(this.size != o.size()){
+            return false;
+        }
+        if(obj instanceof Deque){
+            for(int i = 0; i < size; i++){
+                if(!this.get(i).equals(o.get(i))){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
-        LinkedListDeque<Integer> mylink = new LinkedListDeque<Integer>();
-        mylink.addFirst(10);
-        mylink.addFirst(5);
-        mylink.addLast(15);
-        System.out.println("mylink.size = " + mylink.size());
-        System.out.println(mylink.get(2));
-        System.out.println(mylink.getRecursive(1));
+//        LinkedListDeque<Integer> mylink = new LinkedListDeque<Integer>();
+//        mylink.addFirst(10);
+//        mylink.addFirst(5);
+//        mylink.addLast(15);
+//        System.out.println("mylink.size = " + mylink.size());
+//        System.out.println(mylink.get(2));
+//        System.out.println(mylink.getRecursive(1));
+//        for(int i : mylink){
+//            System.out.println(i);
+//        }
+//        ArrayDeque<Integer> kk = new ArrayDeque<>();
+//        kk.addFirst(15);
+//        kk.addFirst(10);
+//        kk.addFirst(5);
+//        System.out.println(kk.size());
+//        System.out.println(kk.equals(mylink));
     }
 }

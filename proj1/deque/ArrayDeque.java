@@ -1,6 +1,8 @@
 package deque;
 
-public class ArrayDeque<Xiaoma> implements Deque<Xiaoma>{
+import java.util.Iterator;
+
+public class ArrayDeque<Xiaoma> implements Deque<Xiaoma>,Iterable<Xiaoma>{
     private int size;
     private int nextFirst;
     private int nextLast;
@@ -159,12 +161,52 @@ public class ArrayDeque<Xiaoma> implements Deque<Xiaoma>{
         }
     }
 
+    @Override
+    public Iterator<Xiaoma> iterator(){
+        return new ArrayDeque.ArraySetIterator();
+    }
+    public class ArraySetIterator implements Iterator<Xiaoma>{
+        private int wizPos;
+        public ArraySetIterator(){
+            wizPos = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return get(wizPos) != null;
+        }
+
+        @Override
+        public Xiaoma next() {
+            Xiaoma returnItem = get(wizPos);
+            wizPos += 1;
+            return returnItem;
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Deque<Xiaoma> o =(Deque<Xiaoma>) obj;
+        if(this.size != o.size()){
+            return false;
+        }
+        if(obj instanceof Deque){
+            for(int i = 0; i < size; i++){
+                if(!this.get(i).equals(o.get(i))){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
 
     public static void main(String[] args) {
-        ArrayDeque<Integer> L = new ArrayDeque();
-        for(int i=0;i<441;i++){
-            L.addLast(0);
-        }
-        System.out.println(L.get(0));
+//        ArrayDeque<Integer> L = new ArrayDeque();
+//        for(int i=0;i<441;i++){
+//            L.addLast(0);
+//        }
+//        System.out.println(L.get(0));
     }
 }
